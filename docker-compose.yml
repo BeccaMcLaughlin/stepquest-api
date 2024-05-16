@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: stepquest_db
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: devel
+      POSTGRES_DB: stepquest
+    ports:
+      - "2345:5432"
+    volumes:
+      # docker will run SQL files that are copied to /docker-entrypoint-initdb.d automatically
+      # this gives us an easy way to run migrations / create db tables
+      # the order in which they are run is determined by the prefix
+      # so always prefix your migration files with 01_, 02_, etc
+      - ./etc/postgresql/seeds:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+    - stepquest-network
+
+  app:
+    build:
+      dockerfile: ./etc/node/Dockerfile
+      context: ./
+    container_name: stepquest_app
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+      - "9090:5555"
+    environment:
+      APP_NAME: "stepquest"
+      APP_DATABASE_URL: "postgresql://devel:@postgres:5432/stepquest?schema=public"
+      APP_ENV: "development"
+      APP_LOG_LEVEL: "debug"
+      NODE_ENV: "development"
+    networks:
+      - stepquest-network
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: ./etc/nginx/Dockerfile
+    container_name: stepquest_nginx
+    environment:
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - stepquest-network
+    depends_on:
+      - app
+
+
+volumes:
+  postgres-data:
+
+networks:
+  stepquest-network:
+    driver: bridge
