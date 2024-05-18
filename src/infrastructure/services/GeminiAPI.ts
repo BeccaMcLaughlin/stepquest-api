@@ -1,7 +1,8 @@
 import { GenerationConfig, GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 import { Configuration } from '../../application/config';
+import { IGeminiAPI } from './IGeminiAPI';
 
-export class GeminiAPI {
+export class GeminiAPI implements IGeminiAPI {
   private generationConfig: GenerationConfig = {
     temperature: 1,
     topP: 0.95,
@@ -11,10 +12,10 @@ export class GeminiAPI {
   };
   private model: GenerativeModel;
 
-  constructor (configuration: Configuration) {
-    const genAi = new GoogleGenerativeAI(configuration.APP_GEMINI_API_KEY);
+  constructor (config: Configuration) {
+    const genAi = new GoogleGenerativeAI(config.APP_GEMINI_API_KEY);
     this.model = genAi.getGenerativeModel({
-      model: configuration.APP_GEMINI_MODEL,
+      model: config.APP_GEMINI_MODEL,
       generationConfig: this.generationConfig,
     });
   }
