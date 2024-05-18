@@ -1,4 +1,4 @@
 node_modules
 logs
-./src/.env
-./dist
+/src/.env
+/dist
