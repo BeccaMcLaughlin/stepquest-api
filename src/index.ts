@@ -1,6 +1,6 @@
-import express, {Router} from 'express';
+import express, { Router } from 'express';
 import { container } from './infrastructure/di/container';
-import {Configuration} from "./application/config";
+import { Configuration } from './application/config';
 const config = container.resolve<Configuration>('config');
 const routes = container.resolve<Router>('apiRouter');
 
