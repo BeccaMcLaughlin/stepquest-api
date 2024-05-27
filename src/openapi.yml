@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: Quest Service API
+  version: 1.0.0
+  description: API for fetching new quests
+
+paths:
+  /new:
+    get:
+      summary: Fetch a new quest
+      description: Fetches a new quest based on the provided difficulty
+      parameters:
+        - in: query
+          name: difficulty
+          required: true
+          schema:
+            type: string
+          description: The difficulty level of the quest
+      responses:
+        '200':
+          description: A new quest
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  objective:
+                    type: string
+                    description: The objective of the quest
+                    example: Test objective
+                  title:
+                    type: string
+                    description: The title of the quest
+                    example: Test
+                  steps:
+                    type: integer
+                    description: The number of steps in the quest
+                    example: 400
+                  character:
+                    type: string
+                    description: The character involved in the quest
+                    example: Wizard
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                    example: Invalid difficulty level
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                    example: Internal server error
+
+components:
+  schemas:
+    Quest:
+      type: object
+      properties:
+        objective:
+          type: string
+          description: The objective of the quest
+        title:
+          type: string
+          description: The title of the quest
+        steps:
+          type: integer
+          description: The number of steps in the quest
+        character:
+          type: string
+          description: The character involved in the quest
