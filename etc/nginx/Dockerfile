@@ -15,8 +15,7 @@ RUN touch /run/nginx.pid \
 
 # Configure nginx
 COPY ./etc/nginx/nginx.conf /etc/nginx/nginx.conf
-# Remove default server definition
-RUN rm /etc/nginx/conf.d/default.conf
+COPY ./etc/nginx/ssl /etc/nginx/ssl
 
 USER appuser
 
