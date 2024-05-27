@@ -22,8 +22,9 @@ export class TextToQuestTransformer {
     const textAsObject = JSON.parse(this.text);
     return new QuestDetails(
       textAsObject.objective,
-      textAsObject.steps,
-            textAsObject.character as Character,
+      textAsObject.title,
+      parseInt(textAsObject.steps, 10),
+      textAsObject.character as Character,
     );
   }
 }
