@@ -20,6 +20,6 @@ export class QuestService implements IQuestService {
 objective: String. A short description of a fantasy quest based on walking steps for an objective.
 title: String. A title to describe the overall objective, keep this to two or three words only.
 steps: Number. An integer of the number of steps required to walk for this objective. Keep the number of steps around or below ${questDifficulty.steps}, no commas.
-character: Enumeration. Describes who is handing out the objective. Choose from "Wizard", "Townfolk1" or "Townfolk2" and weight each option at an equal chance.`;
+character: Enumeration. Describes who is handing out the objective. Choose from "wizard", "townfolk1" or "townfolk2" and weight each option at an equal chance.`;
   }
 }
